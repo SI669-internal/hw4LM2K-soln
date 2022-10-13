@@ -1,30 +1,38 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
-
+import { useDispatch } from 'react-redux';
+import { DELETE_TAG } from '../Reducer';
 
 function TagListItem(props) {
 
   const { tag, navigation } = props;
-
+  const dispatch = useDispatch();
   const deleteTag = (tag) => {
-
+    dispatch({
+      type: DELETE_TAG,
+      payload: {
+        key: tag.key
+      }
+    })
   }
 
   return (
     <View style={styles.listItemContainer}>
+      <View style={styles.li1Container}>
+        <TouchableOpacity 
+          style={[styles.li1]}
+          onPress={()=>{
+            navigation.navigate('TagDetails', { 
+              tag: tag 
+            });
+          }}  
+        >
+          <Text style={styles.listItemText}>{tag.tagName}</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity 
-        style={styles.li1}
-        onPress={()=>{
-          navigation.navigate('TagDetails', { 
-            tag: tag 
-          });
-        }}  
-      >
-        <Text style={styles.listItemText}>{tag.tagName}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={styles.li3}
+        style={styles.li2}
         onPress={()=>{
           deleteTag(tag);
         }}  
@@ -46,21 +54,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    //padding: '1%',
+//    paddingLeft: '15%',
+  },
+  li1Container: {
+    flex: 0.4, 
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+
   },
   li1: {
-    flex: 0.8, 
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingRight: '3%'
+    padding: '1%',
+    borderRadius: 6, 
   },
   li2: {
     flex: 0.2,
-    backgroundColor: 'white'
   },
   listItemText: {
-    fontSize: 24
+    fontSize: 14, 
   },
 });
 

@@ -7,7 +7,6 @@ import { ADD_TAG, UPDATE_TAG } from '../Reducer';
 function TagDetailsScreen(props) {
 
   const colors = useSelector(state=>state.colors);
-  console.log('in TDS', colors.entries());
 
   const dispatch = useDispatch();
 
@@ -57,7 +56,30 @@ function TagDetailsScreen(props) {
           style={styles.inputStyle}
         />
       </View>
+      <View style={styles.colorSwatchContainer}>
+        <FlatList
+          data={colors}
+          contentContainerStyle={styles.colorSwatches}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                style={[
+                  styles.colorSwatch, 
+                  {backgroundColor: item},
+                  item===selectedColor?
+                  styles.selectedSwatch:
+                  {}  
+                ]}
+                onPress={()=>setSelectedColor(item)}
 
+
+              />
+            )
+          }}
+
+
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <Button
           title='Cancel'

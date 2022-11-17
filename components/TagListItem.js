@@ -21,7 +21,7 @@ function TagListItem(props) {
     <View style={styles.listItemContainer}>
       <View style={styles.li1Container}>
         <TouchableOpacity 
-          style={[styles.li1]}
+          style={[styles.li1, {backgroundColor: tag.color}]}
           onPress={()=>{
             navigation.navigate('TagDetails', { 
               tag: tag 
@@ -60,10 +60,9 @@ const styles = StyleSheet.create({
     flex: 0.4, 
     justifyContent: 'flex-start',
     alignItems: 'flex-start'
-
   },
   li1: {
-    padding: '1%',
+    padding: '2%',
     borderRadius: 6, 
   },
   li2: {

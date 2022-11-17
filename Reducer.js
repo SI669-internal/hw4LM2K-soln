@@ -92,13 +92,13 @@ const addTag = (state, tagName, tagColor) => {
 }
 
 const updateTag = (state, tagId, tagName, tagColor) => {
-  let newTag = {
+  let nwTag = {
     tagName: tagName,
     color: tagColor,
     key: tagId
   }
   console.log('updating tag', tagId, 'old tags', state.tags);
-  let newTags = state.tags.map(elem => elem.key===tagId ? newTag : elem);
+  let newTags = state.tags.map(elm => elm.key===tagId ? nwTag : elm);
   console.log('new tags', newTags);
   return {
     ...state,

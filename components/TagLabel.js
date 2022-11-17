@@ -18,7 +18,7 @@ function TagLabel({itemTags, allTags}) {
   if (itemTags.length >= 1) {
     let tag0 = tagFromId(itemTags[0], allTags);
     return (
-      <View style={[styles.tagLabel]}>
+      <View style={[styles.tagLabel, {backgroundColor: tag0.color}]}>
         <Text style={styles.tagLabelText}>
           { tag0.tagName } 
           { itemTags.length > 1 ? (' +' + (itemTags.length - 1)) : '' }

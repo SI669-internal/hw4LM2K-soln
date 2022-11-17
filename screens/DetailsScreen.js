@@ -63,7 +63,7 @@ function DetailsScreen(props) {
               <TouchableOpacity 
                 style={[
                   styles.tagLabel, 
-                  {backgroundColor: 'lightgrey'},
+                  {backgroundColor: item.color},
                   selectedTags.includes(item.key) ? 
                   {borderColor: 'black', borderWidth: 2} : 
                   {}]}

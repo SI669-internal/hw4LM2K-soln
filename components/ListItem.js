@@ -69,8 +69,7 @@ const styles = StyleSheet.create({
     paddingRight: '3%'
   },
   li2: {
-    flex: 0.2,
-    backgroundColor: 'white'
+    flex: 0.1,
   },
   listItemText: {
     fontSize: 18

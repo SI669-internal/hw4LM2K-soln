@@ -1,25 +1,43 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from "react-native";
 import { Input, Button } from '@rneui/themed';
 import { useSelector, useDispatch } from 'react-redux';
+import { ADD_TAG, UPDATE_TAG } from '../Reducer';
 
 function TagDetailsScreen(props) {
 
-  const listItems = useSelector(state=>state.listItems);
-  const allTags = useSelector(state=>state.tags);
+  const colors = useSelector(state=>state.colors);
+
   const dispatch = useDispatch();
 
   const { navigation, route } = props;
   const { tag } = route.params;
+  if (!tag.color) {
+    tag.color = colors[0];
+  }
 
   const [inputText, setInputText] = useState(tag.tagName);
-  const color = 'gray';
+  const [selectedColor, setSelectedColor] = useState(tag.color);
 
   const addTag = (tagName, tagColor) => {
-
+    dispatch({
+      type: ADD_TAG,
+      payload: {
+        tagName: tagName, 
+        tagColor: tagColor
+      }
+    });
   }
 
   const updateTag = (tag, tagName=tag.tagName, tagColor=tag.color) => {
+    dispatch({
+      type: UPDATE_TAG,
+      payload: {
+        key: tag.key,
+        tagName: tagName, 
+        tagColor: tagColor
+      }
+    });
 
   }
 
@@ -27,7 +45,7 @@ function TagDetailsScreen(props) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>
-          Edit Tag
+          {tag.key===-1?'Add':'Edit'} Tag
         </Text>
       </View>
       <View style={styles.inputContainer}>
@@ -36,6 +54,30 @@ function TagDetailsScreen(props) {
           value={inputText}
           onChangeText={(text)=>setInputText(text)}
           style={styles.inputStyle}
+        />
+      </View>
+      <View style={styles.colorSwatchContainer}>
+        <FlatList
+          data={colors}
+          contentContainerStyle={styles.colorSwatches}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                style={[
+                  styles.colorSwatch, 
+                  {backgroundColor: item},
+                  item===selectedColor?
+                  styles.selectedSwatch:
+                  {}  
+                ]}
+                onPress={()=>setSelectedColor(item)}
+
+
+              />
+            )
+          }}
+
+
         />
       </View>
       <View style={styles.buttonContainer}>
@@ -48,10 +90,10 @@ function TagDetailsScreen(props) {
         <Button
           title='Save'
           onPress={()=>{
-            if (item.key === -1) {
-              addTag(inputText, color);
+            if (tag.key === -1) {
+              addTag(inputText, selectedColor);
             } else {
-              updateTag(tag, inputText, color);
+              updateTag(tag, inputText, selectedColor);
             }
             navigation.navigate('SettingsHome');
           }}
@@ -72,17 +114,43 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.1,
     justifyContent: 'flex-end',
+    alignItems: 'center',
     paddingBottom: '5%'
   },
   headerText: {
     fontSize: 32
   },
   inputContainer: {
-    flex: 0.1,
+    flex: 0.2,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '80%'
+  },
+  inputStyle:{
+    fontSize: 18,
+  },
+  colorSwatchContainer: {
+    flex: 0.1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  colorSwatches: {
+    flexDirection: 'row',
+    width: '100%', 
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  colorSwatch: {
+    borderRadius: 6,
+    borderWidth: 0,
+    width: 40,
+    height: 40
+  },
+  selectedSwatch: {
+    borderWidth: 2,
+    borderColor: 'black'
   },
   tagContainer: {
     justifyContent: 'flex-start',

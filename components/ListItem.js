@@ -7,12 +7,10 @@ import { TagLabel } from './TagLabel';
 
 function ListItem(props) {
 
-  const listItems = useSelector((state) => state.listItems);
   const allTags = useSelector(state => state.tags);
 
   const dispatch = useDispatch();
   const { item, navigation } = props;
-  console.log('rendering item:', item);
 
   const deleteItem = (item) => {
     dispatch({
@@ -64,18 +62,17 @@ const styles = StyleSheet.create({
     //padding: '1%',
   },
   li1: {
-    flex: 0.8, 
+    flex: 0.9, 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingRight: '3%'
   },
   li2: {
-    flex: 0.2,
-    backgroundColor: 'white'
+    flex: 0.1,
   },
   listItemText: {
-    fontSize: 24
+    fontSize: 18
   },
 });
 

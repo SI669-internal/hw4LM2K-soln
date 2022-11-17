@@ -1,16 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 function tagFromId(tagId, tagList) {
   let theTag = tagList.find(item=>(item.key===tagId));
   return theTag ? theTag : undefined;
 }
 
-function tagNameFromId(tagId, tagList) {
-  let theTag = tagList.find(item=>(item.key===tagId));
-  return theTag ? theTag.tagName : '';
-}
-
 function TagLabel({itemTags, allTags}) {
+
+  const colors = useSelector((state) => state.colors);
+
   if (itemTags.length === 0) {
     return (
       <View/>
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   tagLabel: {
     padding: 5,
     borderRadius: 6,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'lightgray',
   },
   tagLabelText: {
     fontSize: 10
